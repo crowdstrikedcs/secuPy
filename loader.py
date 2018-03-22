@@ -99,8 +99,9 @@ def load(fileName):
     print("Dataset load complete, storing...")
     file = open('flowdata.pickle', 'wb')
     pickle.dump([np.array(trainData), np.array(trainLabel), np.array(testData), np.array(testLabel)], file)
-    print(len(states))
+    states = list(set(states))
     print(states)
+    print(len(stateDict))
     #return the training and the test dataset
     #return np.array(trainData), np.array(trainLabel), np.array(testData), np.array(testLabel)
 
