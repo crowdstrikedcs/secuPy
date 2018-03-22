@@ -48,7 +48,7 @@ def load(fileName):
         #handle missing ports
         if Sport=='': continue
         if Dport=='': continue
-        #back, nor, bot
+        #Traffic type
         try:
             if "Background" in label:
                 label=0
