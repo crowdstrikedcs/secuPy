@@ -1,3 +1,6 @@
+##Dixon Styres
+#secuPy
+
 #Dataset Loader module
 #Loads .binetflow from CTU Scenario 1 and stores relevant features
 
