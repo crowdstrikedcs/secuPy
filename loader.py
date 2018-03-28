@@ -1,3 +1,6 @@
+##Dixon Styres
+##secuPy
+
 #Dataset Loader module
 #Loads .binetflow from CTU Scenario 1 and stores relevant features
 
@@ -27,7 +30,7 @@ class Loader():
         testNormal=0
         testBot=0
 
-        #dicts to convert Argus protocols and state to integers
+        #dicts to convert protocols to integers
         protoDict = {'tcp': 0, 'udp': 1, 'rtp': 2, 'pim': 3, 'icmp': 4, 'arp': 5, 'ipx/spx': 6, 'rtcp': 7, 'igmp' : 8, 'ipv6-icmp': 9, 'ipv6': 10, 'udt': 11, 'esp': 12, 'unas': 13, 'rarp': 14, }
 
         file.readline()
@@ -39,12 +42,12 @@ class Loader():
             # 2011/08/10 09:46:59.607825,1.026539,tcp,94.44.127.113,1577,   ->,147.32.84.59,6881,S_RA,0,0,4,276,156,flow=Background-Established-cmpgw-CVUT
             dur, proto, Sport, Dport, Sip, Dip, totP, totB, label= sd[1], sd[2], sd[4], sd[7], sd[3], sd[6], sd[11], sd[12], sd[14]
             try:
-                #converts an IP to an 32 bit number, assuming this is easier to ~classify~
+                #converts an IP to an 32 bit number, easier to ~classify~
                 Sip = int(netaddr.IPAddress(Sip))
             except:
                 continue
             try:
-                #converts an IP to an 32 bit number, assuming this is easier to ~classify~
+                #converts an IP to an 32 bit number, easier to ~classify~
                 Dip = int(netaddr.IPAddress(Dip))
             except:
                 continue
