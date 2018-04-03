@@ -98,11 +98,41 @@ class Loader():
                 continue
         #pickle the dataset
         print(normalCount, botCount, testNormal, testBot)
-        print("Dataset load complete, storing...")
-        file = open('flowdata.pickle', 'wb')
-        pickle.dump([np.array(trainData), np.array(trainLabel), np.array(testData), np.array(testLabel)], file)
+        #print("Dataset load complete, storing...")
+        #file = open('flowdata.pickle', 'wb')
+        #pickle.dump([np.array(trainData), np.array(trainLabel), np.array(testData), np.array(testLabel)], file)
+
         #return the training and the test dataset
-        #return np.array(trainData), np.array(trainLabel), np.array(testData), np.array(testLabel)
+        return np.array(trainData), np.array(trainLabel), np.array(testData), np.array(testLabel)
+
+        #for live input, format an Argus line entry
+    def format(self,log):
+        #dicts to convert protocols to integers
+        protoDict = {'tcp': 0, 'udp': 1, 'rtp': 2, 'pim': 3, 'icmp': 4, 'arp': 5, 'ipx/spx': 6, 'rtcp': 7, 'igmp' : 8, 'ipv6-icmp': 9, 'ipv6': 10, 'udt': 11, 'esp': 12, 'unas': 13, 'rarp': 14, }
+
+        #sd is a list where each element is a unique val from the csv line
+        sd = log[:-1].split(',')
+        #meat, this is what we are actually looking at per line
+        # 2011/08/10 09:46:59.607825,1.026539,tcp,94.44.127.113,1577,   ->,147.32.84.59,6881,S_RA,0,0,4,276,156,flow=Background-Established-cmpgw-CVUT
+        dur, proto, Sport, Dport, Sip, Dip, totP, totB, label= sd[1], sd[2], sd[4], sd[7], sd[3], sd[6], sd[11], sd[12], sd[14]
+        try:
+            #converts an IP to an 32 bit number, easier to ~classify~
+            Sip = int(netaddr.IPAddress(Sip))
+        except:
+            print("error reading source log")
+            return
+        try:
+            #converts an IP to an 32 bit number, easier to ~classify~
+            Dip = int(netaddr.IPAddress(Dip))
+        except:
+            print("error reading source log")
+            return
+        #handle missing ports
+        if Sport=='': return
+        if Dport=='': return
+        entry = [float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)]
+
+        return entry
 
 if __name__ == "__main__":
     try:

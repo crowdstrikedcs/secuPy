@@ -1,30 +1,31 @@
 ##Dixon Styres
 ##secuPy
 
-#running model
+#production model
+from __future__ import division
+from sklearn import neighbors
+from sklearn import preprocessing
+import threading
 
-import sklearn
-
-class KNNModel(threading.Thread):
+class KNNModel():
     #test data, test labels, train data, train labels
     def __init__(self, trainData, trainLabel, testData, testLabel):
-        threading.Thread.__init__(self)
+        #threading.Thread.__init__(self)
         self.trainData = trainData
         self.trainLabel = trainLabel
         self.testData = testData
         self.testLabel = testLabel
+        self.knnModel = neighbors.KNeighborsClassifier()
 
     def run(self):
         #standardize features using z score
-        trainData = sklearn.preprocessing.scale(trainData)
-        testData = sklearn.preprocessing.scale(testData)
+        self.trainData = preprocessing.scale(self.trainData)
+        self.testData = preprocessing.scale(self.testData)
+
         #startup and fit model, default k
-        knnModel = KNeighborsClassifier()
-        knnModel.fit(X, Y)
-        #predict test data
-        sd = knnModel.predict(XT)
-        #calcuate accuracy
-        #where predicted = actual / total test traffic
-        acc = (sum(sd == YT) / len(YT) * 100)
-        print("Accuracy of KNN Model: %.2f" % acc+' %')
-        print('=' * 100)
+        self.knnModel.fit(self.trainData, self.trainLabel)
+        print("Model Ready")
+
+        #sd = self.knnModel.predict(self.testData)
+        #acc = ((sum(sd == self.testLabel) / len(self.testLabel))*100)
+        #print("Accuracy of Model: %.2f" % acc+' %')
