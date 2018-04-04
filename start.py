@@ -8,9 +8,10 @@ import model
 from socket import *
 
 class TCPListen():
-    def __init__(self, trainData, trainLabel, testData, testLabel):
-        m1 = model.KNNModel(trainData, trainLabel, testData, testLabel)
-        m1.run()
+    def __init__(self, trainData, trainLabel, testData, testLabel,l1):
+        self.m1 = model.KNNModel(trainData, trainLabel, testData, testLabel)
+        self.l1 = l1
+        self.m1.run()
         self.hostname = "student.cs.appstate.edu"
         self.port = 15015
     def listen(self):
@@ -20,11 +21,13 @@ class TCPListen():
         #Input loop
         while 1:
             # Read line from server
-            modifiedSentence = clientSocket.recv(1024)
-            print 'FROM SERVER:', modifiedSentence
+            log = clientSocket.recv(1024)
+            print 'FROM SERVER:', log
             #send sentence to classifier
+            log = self.l1.format(log)
+            type = self.m1.predict(log)
             #Check if we are done
-            if(modifiedSentence == 'QUIT'):
+            if(log == 'QUIT'):
                 print "Connection Terminated"
                 break
 
@@ -38,5 +41,5 @@ if __name__ == "__main__":
     trainLabel = data[1]
     testData = data[2]
     testLabel = data[3]
-    listener = TCPListen(trainData, trainLabel, testData, testLabel)
+    listener = TCPListen(trainData, trainLabel, testData, testLabel,l1)
     listener.listen()
