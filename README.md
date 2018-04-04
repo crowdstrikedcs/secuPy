@@ -4,14 +4,12 @@ secuPy
 
 Final Masters project at The University Of Mississippi
 
-AI Tool to analyze network traffic in the effort to decect botnets.
+AI Tool to analyze network traffic in the effort to detect botnets.
 
 secuPy uses KNN clasification to identify Botnet traffic on a psuedo live network setting. The classifier is trained on the CTU-13 dataset specifically in scenario 1 with the Neris Botnet. 
 
 Built with python 2.7
 
-
-data.py: loads in an Argus binetflow file and converts it into a txt document so we can simulate network traffic
 
 loader.py: loads in an Argus binetflow and converts relevant features to numpy arrays/pickles
 
