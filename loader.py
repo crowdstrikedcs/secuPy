@@ -131,7 +131,7 @@ class Loader():
         if Sport=='': return
         if Dport=='': return
         entry = [float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)]
-
+        print(entry)
         return entry
 
 if __name__ == "__main__":

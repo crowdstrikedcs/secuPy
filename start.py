@@ -26,6 +26,7 @@ class TCPListen():
             #send sentence to classifier
             log = self.l1.format(log)
             type = self.m1.predict(log)
+            print(type)
             #Check if we are done
             if(log == 'QUIT'):
                 print "Connection Terminated"

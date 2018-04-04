@@ -6,6 +6,7 @@ from __future__ import division
 from sklearn import neighbors
 from sklearn import preprocessing
 import threading
+import traceback
 
 class KNNModel():
     #test data, test labels, train data, train labels
@@ -29,3 +30,12 @@ class KNNModel():
         #sd = self.knnModel.predict(self.testData)
         #acc = ((sum(sd == self.testLabel) / len(self.testLabel))*100)
         #print("Accuracy of Model: %.2f" % acc+' %')
+    def predict(self, log):
+            try:
+                log = preprocessing.scale(log)
+                print(log)
+                log = [log]
+                type = self.knnModel.predict(log)
+                return type
+            except:
+                traceback.print_exc()
