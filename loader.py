@@ -105,7 +105,7 @@ class Loader():
         #return the training and the test dataset
         return np.array(trainData), np.array(trainLabel), np.array(testData), np.array(testLabel)
 
-        #for live input, format an Argus line entry
+    #for live input, format an Argus line entry
     def format(self,log):
         #dicts to convert protocols to integers
         protoDict = {'tcp': 0, 'udp': 1, 'rtp': 2, 'pim': 3, 'icmp': 4, 'arp': 5, 'ipx/spx': 6, 'rtcp': 7, 'igmp' : 8, 'ipv6-icmp': 9, 'ipv6': 10, 'udt': 11, 'esp': 12, 'unas': 13, 'rarp': 14, }
