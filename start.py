@@ -26,9 +26,9 @@ class TCPListen():
             #send sentence to classifier
             sd = self.l1.format(log)
             type = self.m1.predict(sd)
-            if(type[0] = 1)
-            print("BOTNET DETECTED")
-            print(log)
+            if(type[0] == 1):
+                print("BOTNET DETECTED")
+                print(log)
             #Check if we are done
             if(log == 'QUIT'):
                 print "Connection Terminated"
