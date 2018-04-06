@@ -24,9 +24,11 @@ class TCPListen():
             log = clientSocket.recv(1024)
             print 'FROM SERVER:', log
             #send sentence to classifier
-            log = self.l1.format(log)
-            type = self.m1.predict(log)
-            print(type)
+            sd = self.l1.format(log)
+            type = self.m1.predict(sd)
+            if(type[0] = 1)
+            print("BOTNET DETECTED")
+            print(log)
             #Check if we are done
             if(log == 'QUIT'):
                 print "Connection Terminated"
