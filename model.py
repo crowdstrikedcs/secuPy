@@ -36,4 +36,4 @@ class KNNModel():
                 return type
             except:
                 traceback.print_exc()
-                return ""
+                return [0]

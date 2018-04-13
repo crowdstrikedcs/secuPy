@@ -68,31 +68,31 @@ class Loader():
                 if flag==False:
                     #Training Dataset
                     #get some normal traffic
-                    if label==0 and normalCount<20001:
+                    if label==0 and normalCount<40001:
                         #what we are training on
                         trainData.append([float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
                         trainLabel.append(label)
                         normalCount+=1
                     #get some bot traffic
-                    elif label==1 and botCount<20001:
+                    elif label==1 and botCount<40001:
                         trainData.append([float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
                         trainLabel.append(label)
                         botCount+=1
                     #done, move to test dataset
-                    elif normalCount>19999 and botCount>19999:
+                    elif normalCount>39999 and botCount>39999:
                         flag=True
 
                 else:
                     #Test dataset
-                    if label==0 and testNormal<5001:
+                    if label==0 and testNormal<9001:
                         testData.append([float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
                         testLabel.append(label)
                         testNormal+=1
-                    elif label==1 and testBot<5001:
+                    elif label==1 and testBot<9001:
                         testData.append([float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
                         testLabel.append(label)
                         testBot += 1
-                    elif testNormal>4999 and testBot>4999:
+                    elif testNormal>8999 and testBot>8999:
                         break
             except:
                 continue
