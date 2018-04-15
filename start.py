@@ -12,7 +12,8 @@ class TCPListen():
         self.m1 = model.KNNModel(trainData, trainLabel, testData, testLabel)
         self.l1 = l1
         self.m1.run()
-        self.hostname = "student.cs.appstate.edu"
+        #replace localhost if needed for remote server
+        self.hostname = "localhost"
         self.port = 15015
     def listen(self):
         clientSocket = socket(AF_INET, SOCK_STREAM)
@@ -22,7 +23,6 @@ class TCPListen():
         while 1:
             # Read line from server
             log = clientSocket.recv(1024)
-            print 'FROM SERVER:', log
             #send sentence to classifier
             sd = self.l1.format(log)
             type = self.m1.predict(sd)

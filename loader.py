@@ -98,9 +98,7 @@ class Loader():
                 continue
         #pickle the dataset
         print(normalCount, botCount, testNormal, testBot)
-        #print("Dataset load complete, storing...")
-        #file = open('flowdata.pickle', 'wb')
-        #pickle.dump([np.array(trainData), np.array(trainLabel), np.array(testData), np.array(testLabel)], file)
+        print(testData[3])
 
         #return the training and the test dataset
         return np.array(trainData), np.array(trainLabel), np.array(testData), np.array(testLabel)
@@ -110,7 +108,7 @@ class Loader():
         #dicts to convert protocols to integers
         protoDict = {'tcp': 0, 'udp': 1, 'rtp': 2, 'pim': 3, 'icmp': 4, 'arp': 5, 'ipx/spx': 6, 'rtcp': 7, 'igmp' : 8, 'ipv6-icmp': 9, 'ipv6': 10, 'udt': 11, 'esp': 12, 'unas': 13, 'rarp': 14, }
 
-        #sd is a list where each element is a unique val from the csv line
+        #sd is a list where each element is a unique val from the netFlow line
         sd = log[:-1].split(',')
         #meat, this is what we are actually looking at per line
         # 2011/08/10 09:46:59.607825,1.026539,tcp,94.44.127.113,1577,   ->,147.32.84.59,6881,S_RA,0,0,4,276,156,flow=Background-Established-cmpgw-CVUT

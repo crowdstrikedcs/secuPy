@@ -5,14 +5,12 @@
 from __future__ import division
 from sklearn import neighbors
 from sklearn.preprocessing import StandardScaler
-import threading
 import traceback
 import numpy as np
 
 class KNNModel():
     #test data, test labels, train data, train labels
     def __init__(self, trainData, trainLabel, testData, testLabel):
-        #threading.Thread.__init__(self)
         self.trainData = trainData
         self.trainLabel = trainLabel
         self.testData = testData
@@ -27,11 +25,11 @@ class KNNModel():
         self.knnModel.fit(self.trainData, self.trainLabel)
         print("Model Ready")
         sd = self.knnModel.predict(self.testData)
-        acc = ((sum(sd == self.testLabel) / len(self.testLabel))*100)
-        print("Accuracy of Model: %.2f" % acc+' %')
     def predict(self, log):
             try:
+                #so we can standardize a single sample.
                 log = self.scaler.transform(np.reshape(log, (1,-1)))
+                #predict for one sample
                 type = self.knnModel.predict(log)
                 return type
             except:
