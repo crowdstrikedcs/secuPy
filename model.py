@@ -33,5 +33,4 @@ class KNNModel():
                 type = self.knnModel.predict(log)
                 return type
             except:
-                traceback.print_exc()
                 return [0]

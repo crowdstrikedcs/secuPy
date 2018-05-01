@@ -113,13 +113,13 @@ class Loader():
             #converts an IP to an 32 bit number, easier to ~classify~
             Sip = int(netaddr.IPAddress(Sip))
         except:
-            print("error formatting log")
+            #print("error formatting log")
             return
         try:
             #converts an IP to an 32 bit number, easier to ~classify~
             Dip = int(netaddr.IPAddress(Dip))
         except:
-            print("error formatting log")
+            #print("error formatting log")
             return
         #handle missing ports
         if Sport=='': return
@@ -128,7 +128,7 @@ class Loader():
             entry = [float(dur), protocals[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)]
             return entry
         except:
-            print("error formatting log")
+            #print("error formatting log")
             return []
 
 if __name__ == "__main__":

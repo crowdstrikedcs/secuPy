@@ -14,7 +14,7 @@ class TCPListen():
         self.m1.run()
         #replace localhost if needed for remote server
         self.hostname = "student.cs.appstate.edu"
-        self.port = 15015
+        self.port = 15016
     def listen(self):
         clientSocket = socket(AF_INET, SOCK_STREAM)
         clientSocket.connect((self.hostname, self.port))
