@@ -6,7 +6,6 @@
 
 import netaddr, struct, sys
 import numpy as np
-import pickle
 
 class Loader():
     def __init__(self, fileName):
