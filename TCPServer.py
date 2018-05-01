@@ -9,6 +9,7 @@ from socket import *
 import sys
 import multiprocessing
 import time
+import traceback
 
 port = 15015
 fileName = ""
@@ -23,23 +24,21 @@ print 'Listening on port', port, '...'
 # While loop to handle clients making requests
 def worker():
     try:
-        file = open(fileName, 'r')
-        print("File opened successfully, reading...")
+        with open(fileName) as openfileobject:
+            print("File opened successfully, reading...")
+            for line in openfileobject:
+                serverSentence = line
+                connectionSocket.send(serverSentence)
+                time.sleep(0.3)
     except:
+        traceback.print_exc()
         print("Unable to load file")
         print("Usage: python loader.py 'filepath'")
         exit()
-    while 1:
-        # Write output line to socket
-        for x in range(0,port):
-            serverSentence = file.readline().rstrip()
-            connectionSocket.send(serverSentence)
-            time.sleep(1)
-        serverSentence = "QUIT"
-        connectionSocket.send(serverSentence)
-        print 'Transfer End'
-        connectionSocket.close()
-        break
+    serverSentence = "QUIT"
+    connectionSocket.send(serverSentence)
+    print 'Transfer End'
+    connectionSocket.close()
     return
 
 if __name__ == "__main__":

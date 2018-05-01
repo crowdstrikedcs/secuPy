@@ -13,7 +13,7 @@ class TCPListen():
         self.l1 = l1
         self.m1.run()
         #replace localhost if needed for remote server
-        self.hostname = "localhost"
+        self.hostname = "student.cs.appstate.edu"
         self.port = 15015
     def listen(self):
         clientSocket = socket(AF_INET, SOCK_STREAM)
@@ -26,13 +26,13 @@ class TCPListen():
             #send sentence to classifier
             sd = self.l1.format(log)
             type = self.m1.predict(sd)
-            if(type[0] == 1):
-                print("BOTNET DETECTED")
-                print(log)
             #Check if we are done
             if(log == 'QUIT'):
                 print "Connection Terminated"
                 break
+            if(type[0] == 1):
+                print("BOTNET DETECTED")
+                print(log)
 
         # Close the socket
         clientSocket.close()

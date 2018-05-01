@@ -31,7 +31,7 @@ class Loader():
         testBot=0
 
         #dicts to convert protocols to integers
-        protoDict = {'tcp': 0, 'udp': 1, 'rtp': 2, 'pim': 3, 'icmp': 4, 'arp': 5, 'ipx/spx': 6, 'rtcp': 7, 'igmp' : 8, 'ipv6-icmp': 9, 'ipv6': 10, 'udt': 11, 'esp': 12, 'unas': 13, 'rarp': 14, }
+        protocals = {'tcp': 0, 'udp': 1, 'rtp': 2, 'pim': 3, 'icmp': 4, 'arp': 5, 'ipx/spx': 6, 'rtcp': 7, 'igmp' : 8, 'ipv6-icmp': 9, 'ipv6': 10, 'udt': 11, 'esp': 12, 'unas': 13, 'rarp': 14, }
 
         file.readline()
 
@@ -70,12 +70,12 @@ class Loader():
                     #get some normal traffic
                     if label==0 and normalCount<40001:
                         #what we are training on
-                        trainData.append([float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
+                        trainData.append([float(dur), protocals[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
                         trainLabel.append(label)
                         normalCount+=1
                     #get some bot traffic
                     elif label==1 and botCount<40001:
-                        trainData.append([float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
+                        trainData.append([float(dur), protocals[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
                         trainLabel.append(label)
                         botCount+=1
                     #done, move to test dataset
@@ -85,20 +85,17 @@ class Loader():
                 else:
                     #Test dataset
                     if label==0 and testNormal<9001:
-                        testData.append([float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
+                        testData.append([float(dur), protocals[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
                         testLabel.append(label)
                         testNormal+=1
                     elif label==1 and testBot<9001:
-                        testData.append([float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
+                        testData.append([float(dur), protocals[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)])
                         testLabel.append(label)
                         testBot += 1
                     elif testNormal>8999 and testBot>8999:
                         break
             except:
                 continue
-        #pickle the dataset
-        print(normalCount, botCount, testNormal, testBot)
-        print(testData[3])
 
         #return the training and the test dataset
         return np.array(trainData), np.array(trainLabel), np.array(testData), np.array(testLabel)
@@ -106,13 +103,13 @@ class Loader():
     #for live input, format an Argus line entry
     def format(self,log):
         #dicts to convert protocols to integers
-        protoDict = {'tcp': 0, 'udp': 1, 'rtp': 2, 'pim': 3, 'icmp': 4, 'arp': 5, 'ipx/spx': 6, 'rtcp': 7, 'igmp' : 8, 'ipv6-icmp': 9, 'ipv6': 10, 'udt': 11, 'esp': 12, 'unas': 13, 'rarp': 14, }
+        protocals = {'tcp': 0, 'udp': 1, 'rtp': 2, 'pim': 3, 'icmp': 4, 'arp': 5, 'ipx/spx': 6, 'rtcp': 7, 'igmp' : 8, 'ipv6-icmp': 9, 'ipv6': 10, 'udt': 11, 'esp': 12, 'unas': 13, 'rarp': 14, }
 
         #sd is a list where each element is a unique val from the netFlow line
         sd = log[:-1].split(',')
         #meat, this is what we are actually looking at per line
         # 2011/08/10 09:46:59.607825,1.026539,tcp,94.44.127.113,1577,   ->,147.32.84.59,6881,S_RA,0,0,4,276,156,flow=Background-Established-cmpgw-CVUT
-        dur, proto, Sport, Dport, Sip, Dip, totP, totB, label= sd[1], sd[2], sd[4], sd[7], sd[3], sd[6], sd[11], sd[12], sd[14]
+        dur, proto, Sport, Dport, Sip, Dip, totP, totB= sd[1], sd[2], sd[4], sd[7], sd[3], sd[6], sd[11], sd[12]
         try:
             #converts an IP to an 32 bit number, easier to ~classify~
             Sip = int(netaddr.IPAddress(Sip))
@@ -129,7 +126,7 @@ class Loader():
         if Sport=='': return
         if Dport=='': return
         try:
-            entry = [float(dur), protoDict[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)]
+            entry = [float(dur), protocals[proto], int(Sport), int(Dport), Sip, Dip, int(totP), int(totB)]
             return entry
         except:
             print("error formatting log")
